@@ -4,6 +4,7 @@ using Hotel_List_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel_List_API.Migrations
 {
     [DbContext(typeof(HotelListDBContext))]
-    partial class HotelListDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230617120932_AddIdentityUser")]
+    partial class AddIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,20 +205,6 @@ namespace Hotel_List_API.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ee25b15f-2aeb-4758-a844-68cb6a07f32d",
-                            Name = "Admin",
-                            NormalizedName = "Administrator"
-                        },
-                        new
-                        {
-                            Id = "d245e18d-0eef-4df1-9b3d-8bcde38467dd",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

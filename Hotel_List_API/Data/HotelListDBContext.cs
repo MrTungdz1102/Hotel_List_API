@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotel_List_API.Data
 {
-    public class HotelListDBContext : DbContext
+    public class HotelListDBContext : IdentityDbContext<ApiUser>
     {
         public HotelListDBContext(DbContextOptions<HotelListDBContext> options) : base(options)
         {
@@ -13,14 +14,14 @@ namespace Hotel_List_API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Country>().HasData(
-                new Country {Id = 1, Name = "India", ShortName = "IN" },
-                new Country {Id = 2, Name = "VietNam", ShortName = "VN" }
-                );
-            modelBuilder.Entity<Hotel>().HasData(
-                new Hotel { Id = 1, Name = "Hotel1", Address = "Address1", Rating = 5.0, CountryId = 1 },
-                new Hotel { Id = 2, Name = "Hotel2", Address = "Address2", Rating = 5.0, CountryId = 2 }
-                );
+            modelBuilder.ApplyConfiguration(new Configurations.RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.CountryConfiguration());
+            modelBuilder.ApplyConfiguration(new Configurations.HotelConfiguration());
+            
+            //modelBuilder.Entity<Country>().HasData(
+            //    new Country {Id = 1, Name = "India", ShortName = "IN" },
+            //    new Country {Id = 2, Name = "VietNam", ShortName = "VN" }
+            //    );
         }
     }
 }
