@@ -12,6 +12,8 @@ using AutoMapper;
 using Hotel_List_API.Models.Hotel;
 using Hotel_List_API.Models.Country;
 using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Hotel_List_API.Controllers
 {
@@ -53,6 +55,7 @@ namespace Hotel_List_API.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutHotel(int id, UpdateHotelDTO updateHotel)
         {
             if (id != updateHotel.Id)
@@ -87,6 +90,7 @@ namespace Hotel_List_API.Controllers
         // POST: api/Hotels
         // su dung CreateHotelDTO hay Hotel deu duoc
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CreateHotelDTO>> PostHotel(CreateHotelDTO createHotel)
         {
             var hotel = _mapper.Map<Hotel>(createHotel);
@@ -96,6 +100,7 @@ namespace Hotel_List_API.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
             var hotel = await _hotelRepository.GetAsync(id);

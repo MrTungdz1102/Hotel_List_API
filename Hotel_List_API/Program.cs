@@ -20,7 +20,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddIdentityCore<ApiUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<HotelListDBContext>();
+builder.Services.AddIdentityCore<ApiUser>().AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("HotelListAPI")
+    .AddEntityFrameworkStores<HotelListDBContext>().AddDefaultTokenProviders() ;
 
 builder.Services.AddCors(options =>
 {
@@ -68,7 +70,7 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging(); // ghi lại thông tin về các yêu cầu HTTP đến ứng dụng bằng Serilog
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
