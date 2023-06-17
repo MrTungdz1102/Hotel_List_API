@@ -23,7 +23,7 @@ namespace Hotel_List_API.Repository
             _configuration = configuration;
         }
 
-        public async Task<bool> Login(LoginDTO loginDTO)
+        public async Task<AuthResponseDTO> Login(LoginDTO loginDTO)
         {
             bool isValidUser = false;
 
@@ -31,17 +31,26 @@ namespace Hotel_List_API.Repository
             isValidUser = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
 
             // check exception for CheckPasswordAsync when user was null
-            if (user is null)
-            {
-                return default;
-            }
+            //if (user is null)
+            //{
+            //    return default;
+            //}
 
-            if (!isValidUser)
-            {
-                return default;
-            }
-            return isValidUser;
+            //if (!isValidUser)
+            //{
+            //    return default;
+            //}
 
+            if (user == null || isValidUser == false)
+            {
+              //  _logger.LogWarning($"User with email {loginDto.Email} was not found");
+                return null;
+            }
+            var token = await GenerateToken(user);
+            return new AuthResponseDTO { 
+                Token = token,
+                UserID = user.Id
+            };
         }
 
         public async Task<IEnumerable<IdentityError>> Register(ApiUserDTO userDTO)
@@ -59,7 +68,7 @@ namespace Hotel_List_API.Repository
 
         private async Task<string> GenerateToken(ApiUser apiUser)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var roles = await _userManager.GetRolesAsync(apiUser);
 

@@ -40,7 +40,7 @@ namespace Hotel_List_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            return Ok(result);
         }
 
         // api/account/login
@@ -52,12 +52,11 @@ namespace Hotel_List_API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
             var result = await _authManager.Login(loginDTO);
-            if (!result)
+            if (result == null)
             {
                 return Unauthorized();
             }
-
-            return Ok();
+            return Ok(result);
         }
     }
 }
