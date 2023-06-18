@@ -1,6 +1,5 @@
 ﻿
-
-namespace Hotel_List_API.Models.Country
+namespace Hotel_List_API.Configuration.Models.Country
 {
     public class GetCountryDTO : BaseCountryDTO
     {

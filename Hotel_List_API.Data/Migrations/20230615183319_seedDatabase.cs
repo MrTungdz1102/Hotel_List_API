@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Hotel_List_API.Migrations
+namespace Hotel_List_API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class seedDatabase : Migration

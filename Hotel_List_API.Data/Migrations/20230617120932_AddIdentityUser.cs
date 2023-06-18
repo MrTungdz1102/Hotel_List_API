@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
-
-namespace Hotel_List_API.Migrations
+namespace Hotel_List_API.Data.Migrations
 {
     /// <inheritdoc />
     public partial class AddIdentityUser : Migration

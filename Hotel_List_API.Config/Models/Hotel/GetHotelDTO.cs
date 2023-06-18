@@ -1,4 +1,4 @@
-﻿namespace Hotel_List_API.Models.Hotel
+﻿namespace Hotel_List_API.Configuration.Models.Hotel
 {
     public class GetHotelDTO : BaseHotelDTO
     {

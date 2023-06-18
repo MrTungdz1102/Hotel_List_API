@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Hotel_List_API.Contracts;
+using Hotel_List_API.Configuration.Contracts;
+using Hotel_List_API.Configuration.Models.User;
 using Hotel_List_API.Data;
-using Hotel_List_API.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Hotel_List_API.Repository
+namespace Hotel_List_API.Configuration.Repository
 {
     public class AuthManager : IAuthManager
     {

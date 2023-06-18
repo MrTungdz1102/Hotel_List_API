@@ -1,4 +1,4 @@
-﻿namespace Hotel_List_API.Models.User
+﻿namespace Hotel_List_API.Configuration.Models.User
 {
     public class AuthResponseDTO
     {

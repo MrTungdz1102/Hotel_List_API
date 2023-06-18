@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Hotel_List_API.Migrations
+namespace Hotel_List_API.Data.Migrations
 {
     [DbContext(typeof(HotelListDBContext))]
     [Migration("20230615183319_seedDatabase")]

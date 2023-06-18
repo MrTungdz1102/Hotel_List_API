@@ -1,4 +1,4 @@
-﻿namespace Hotel_List_API.Models
+﻿namespace Hotel_List_API.Configuration.Models
 {
     public class QueryParameter
     {
