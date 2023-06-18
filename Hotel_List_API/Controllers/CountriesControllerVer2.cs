@@ -14,16 +14,16 @@ using Hotel_List_API.Exceptions;
 
 namespace Hotel_List_API.Controllers
 {
-    [Route("api/v{version:apiversion}/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [ApiVersion("1.0", Deprecated = true)]
-    public class CountriesController : ControllerBase
+    [ApiVersion("2.0")]
+    public class CountriesControllerVer2 : ControllerBase
     {
         //       private readonly HotelListDBContext _context;
         private readonly ICountryRepository _repoCountry;
         private readonly IMapper _mapper;
 
-        public CountriesController( IMapper mapper, ICountryRepository countryRepository)
+        public CountriesControllerVer2( IMapper mapper, ICountryRepository countryRepository)
         {
             _repoCountry = countryRepository;
             _mapper = mapper;
