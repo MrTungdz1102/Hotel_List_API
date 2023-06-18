@@ -1,6 +1,7 @@
 ﻿using Hotel_List_API.Configurations;
 using Hotel_List_API.Contracts;
 using Hotel_List_API.Data;
+using Hotel_List_API.Middleware;
 using Hotel_List_API.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -66,6 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseSerilogRequestLogging(); // ghi lại thông tin về các yêu cầu HTTP đến ứng dụng bằng Serilog
 app.UseCors("AllowAll");
