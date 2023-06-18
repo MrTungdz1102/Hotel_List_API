@@ -11,10 +11,11 @@ using AutoMapper;
 using Hotel_List_API.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Hotel_List_API.Exceptions;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace Hotel_List_API.Controllers
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/v{version:apiVersion}/countries")]
     [ApiController]
     [ApiVersion("2.0")]
     public class CountriesControllerVer2 : ControllerBase
@@ -31,6 +32,7 @@ namespace Hotel_List_API.Controllers
 
         // GET: api/Countries
         [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<GetCountryDTO>>> GetCountries()
         {
             var countries = await _repoCountry.GetAllAsync();

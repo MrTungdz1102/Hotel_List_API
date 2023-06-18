@@ -15,7 +15,7 @@ using Hotel_List_API.Models;
 
 namespace Hotel_List_API.Controllers
 {
-    [Route("api/v{version:apiversion}/[controller]")]
+    [Route("api/v{version:apiVersion}/countries")]
     [ApiController]
     [ApiVersion("1.0", Deprecated = true)]
     public class CountriesController : ControllerBase
