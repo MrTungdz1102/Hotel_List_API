@@ -4,11 +4,13 @@ using Hotel_List_API.Configuration.Repository;
 using Hotel_List_API.Configurations;
 using Hotel_List_API.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
@@ -21,10 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HotelListDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HotelListDB")));
 
-builder.Services.AddControllers().AddOData(options => // OData
-{
-    options.Select().Filter().OrderBy();
-});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -119,7 +118,14 @@ builder.Services.AddResponseCaching(options =>
     options.UseCaseSensitivePaths = true;
 });
 
+builder.Services.AddHealthChecks(); // default health check
+//builder.Services.AddHealthChecks().AddCheck<CustomHealthCheck>("Custom Health Check", failureStatus: HealthStatus.Degraded,
+//    tags: new[] { "custom" });
 
+builder.Services.AddControllers().AddOData(options => // OData
+{
+    options.Select().Filter().OrderBy();
+});
 
 var app = builder.Build();
 
@@ -131,6 +137,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.MapHealthChecks("/healthcheck"); // default health check
+//app.MapHealthChecks("/healthcheck", new HealthCheckOptions
+//{
+//    Predicate = healthcheck => healthcheck.Tags.Contains("custom"),
+//    ResultStatusCodes =
+//    {
+//            [HealthStatus.Healthy] = StatusCodes.Status200OK,
+//            [HealthStatus.Degraded] = StatusCodes.Status500InternalServerError,
+//            [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+//    },
+//    ResponseWriter = WriteResponse
+//}); 
 
 app.UseHttpsRedirection();
 
