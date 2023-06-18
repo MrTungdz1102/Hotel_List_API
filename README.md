@@ -3,3 +3,6 @@
 - CORS
 - Serilog
 - Auto Mapper
+- Identity - Authentication/Authorize
+- JWT 
+- Refresh Token
