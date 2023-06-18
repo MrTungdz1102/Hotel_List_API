@@ -1,8 +1,12 @@
 # Features in this project
-- Swagger
+- Swagger (Include JWT)
 - CORS
-- Serilog
+- Logging/Serilog
 - Auto Mapper
 - Identity - Authentication/Authorize
 - JWT 
 - Refresh Token
+- API versioning
+- Paging for API
+- OData
+- Health Check
