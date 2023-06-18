@@ -1,4 +1,5 @@
-﻿using Hotel_List_API.Contracts;
+﻿using AutoMapper;
+using Hotel_List_API.Contracts;
 using Hotel_List_API.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,9 +9,9 @@ namespace Hotel_List_API.Repository
     {
         private readonly HotelListDBContext _context;
 
-        public CountryRepository(HotelListDBContext context) : base(context)
+        public CountryRepository(HotelListDBContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
+                _context = context;
         }
 
         public async Task<Country> GetDetails(int id)

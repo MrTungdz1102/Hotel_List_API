@@ -11,6 +11,7 @@ using AutoMapper;
 using Hotel_List_API.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Hotel_List_API.Exceptions;
+using Hotel_List_API.Models;
 
 namespace Hotel_List_API.Controllers
 {
@@ -36,6 +37,16 @@ namespace Hotel_List_API.Controllers
             var countries = await _repoCountry.GetAllAsync();
             var countriesDTO = _mapper.Map<List<GetCountryDTO>>(countries);
             return Ok(countriesDTO);
+        }
+        
+        // GET: api/Countries/?StartIndex=0&pagesize=15&PageNumber=1
+        [HttpGet("GetCountryByPage")]
+        public async Task<ActionResult<IEnumerable<GetCountryDTO>>> GetPageCountries([FromQuery] QueryParameter queryParameter)
+        {
+            var countries = await _repoCountry.GetAllAsync<GetCountryDTO>(queryParameter);
+            queryParameter.PageNumber += 1;
+      //      var countriesDTO = _mapper.Map<List<GetCountryDTO>>(countries);
+            return Ok(countries);
         }
 
         // GET: api/Countries/5
