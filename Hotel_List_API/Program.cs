@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Serilog;
 using System.Text;
 
@@ -77,6 +78,12 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
+builder.Services.AddResponseCaching(options =>
+{
+    options.MaximumBodySize = 1024;
+    options.UseCaseSensitivePaths = true;
+});
+
 var app = builder.Build();
 
 
@@ -88,9 +95,24 @@ if (app.Environment.IsDevelopment())
 }
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseSerilogRequestLogging(); // ghi lại thông tin về các yêu cầu HTTP đến ứng dụng bằng Serilog
-app.UseCors("AllowAll");
 app.UseHttpsRedirection();
+
+app.UseSerilogRequestLogging(); // ghi lại thông tin về các yêu cầu HTTP đến ứng dụng bằng Serilog
+
+app.UseCors("AllowAll");
+
+app.UseResponseCaching();
+app.Use(async (context, next) =>
+{
+    context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+    {
+        Public = true,
+        MaxAge = TimeSpan.FromSeconds(10)
+    };
+    context.Response.Headers[HeaderNames.Vary] = new string[] { "Accept-Encoding" };
+    await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
